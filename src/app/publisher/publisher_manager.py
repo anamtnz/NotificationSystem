@@ -1,0 +1,2 @@
+class PublishersManager:
+    pass
