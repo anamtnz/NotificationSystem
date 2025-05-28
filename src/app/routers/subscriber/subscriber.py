@@ -4,7 +4,7 @@ from fastapi import APIRouter, HTTPException
 
 from app.routers.subscriber.models import SubscriberInfo
 from app.subscriber.models import Subscriber, SubscriberAlreadyExistsException, SubscriberDoesNotExistsException
-from dependencies import get_subscribers_manager
+from app.dependencies import get_subscribers_manager
 
 logger = logging.getLogger(__name__)
 
