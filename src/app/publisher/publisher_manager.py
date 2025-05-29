@@ -1,4 +1,10 @@
+import logging
+
+from app.publisher.models import Notification
 from app.subscriber.models import Subscriber, SubscriberAlreadyExistsException, SubscriberDoesNotExistsException
+from httpx import post
+
+logger = logging.getLogger(__name__)
 
 
 class PublishersManager:
@@ -18,3 +24,13 @@ class PublishersManager:
 
     def get_subscribers(self) -> list[Subscriber]:
         return [subscriber for subscriber in self.subscribers.values()]
+
+    def send_notification(self, notification: Notification) -> list[str]:
+        subscribers_not_notified = []
+        for subscriber in self.get_subscribers():
+            try:
+                post(subscriber.url, json=notification.model_dump())
+            except Exception as e:
+                logger.exception(f"Error sending notification to subscriber {subscriber.id}: {e}")
+                subscribers_not_notified.append(subscriber.id)
+        return subscribers_not_notified
