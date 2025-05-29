@@ -15,3 +15,6 @@ class PublishersManager:
         if not self.subscribers.get(subscriber_id):
             raise SubscriberDoesNotExistsException(subscriber_id)
         self.subscribers.pop(subscriber_id)
+
+    def get_subscribers(self) -> list[Subscriber]:
+        return [subscriber for subscriber in self.subscribers.values()]
