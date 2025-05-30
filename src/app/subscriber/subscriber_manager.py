@@ -1,14 +1,17 @@
-from app.publisher.publisher_manager import PublishersManager
+from app.publisher.publisher_manager import PublisherManager
 from app.subscriber.models import Subscriber
+from app.utils.logger_decorator import logger_decorator
 
 
-class SubscribersManager:
+class SubscriberManager:
 
-    def __init__(self, publishers_manager: PublishersManager):
-        self._publishers_manager = publishers_manager
+    def __init__(self, publisher_manager: PublisherManager):
+        self._publisher_manager = publisher_manager
 
+    @logger_decorator
     def register(self, subscriber: Subscriber) -> None:
-        self._publishers_manager.add_subscriber(subscriber)
+        self._publisher_manager.add_subscriber(subscriber)
 
+    @logger_decorator
     def unregister(self, subscriber_id: str) -> None:
-        self._publishers_manager.delete_subscriber(subscriber_id)
+        self._publisher_manager.delete_subscriber(subscriber_id)

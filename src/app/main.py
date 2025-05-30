@@ -1,3 +1,5 @@
+import logging.config
+
 import uvicorn
 from fastapi import FastAPI
 
@@ -10,6 +12,7 @@ app.include_router(publisher.router)
 
 
 def main():
+    logging.config.fileConfig("logging.cfg")
     uvicorn.run("main:app", host="0.0.0.0", port=8000)
 
 
