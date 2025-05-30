@@ -30,5 +30,6 @@ def send_notification(notification: NotificationInfo) -> list[str]:
         logger.exception(f"Exception sending notification: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
+
 def _to_notification(notification_info: NotificationInfo) -> Notification:
     return Notification.model_validate(notification_info.model_dump(exclude_none=True))

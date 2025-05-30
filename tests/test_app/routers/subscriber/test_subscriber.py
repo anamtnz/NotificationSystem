@@ -17,6 +17,7 @@ def subscriber_mock_initialized(subscriber_mock):
     subscriber_mock.id = ID
     subscriber_mock.name = 'test'
     subscriber_mock.url = 'https://test.com'
+    return subscriber_mock
 
 
 @patch(TESTED_MODULE + '._to_subscriber')
