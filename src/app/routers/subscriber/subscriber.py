@@ -4,13 +4,13 @@ from fastapi import APIRouter, HTTPException
 
 from app.routers.subscriber.models import SubscriberInfo
 from app.subscriber.models import Subscriber, SubscriberAlreadyExistsException, SubscriberDoesNotExistsException
-from app.dependencies import get_subscribers_manager
+from app.dependencies import get_subscriber_manager
 
 logger = logging.getLogger(__name__)
 
 router = APIRouter(prefix="/subscriber", tags=["subscriber"])
 
-manager = get_subscribers_manager()
+manager = get_subscriber_manager()
 
 
 @router.post("/register")
@@ -34,6 +34,7 @@ def unregister(subscriber_id: str) -> None:
         raise HTTPException(status_code=400, detail=str(e))
     except Exception as e:
         logger.exception(f"Exception unregistering subscriber: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
 
 
 def _to_subscriber(subscriber_info: SubscriberInfo) -> Subscriber:

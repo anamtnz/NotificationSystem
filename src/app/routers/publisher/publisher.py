@@ -1,7 +1,7 @@
 import logging
 
 from fastapi import APIRouter, HTTPException
-from app.dependencies import get_publishers_manager
+from app.dependencies import get_publisher_manager
 from app.publisher.models import Notification
 from app.routers.publisher.models import NotificationInfo
 from app.subscriber.models import Subscriber
@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 
 router = APIRouter(prefix="/publisher", tags=["publisher"])
 
-manager = get_publishers_manager()
+manager = get_publisher_manager()
 
 
 @router.get("/subscribers")
