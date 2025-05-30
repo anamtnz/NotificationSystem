@@ -5,10 +5,10 @@ from app.subscriber.subscriber_manager import SubscriberManager
 
 
 @lru_cache
-def get_publishers_manager() -> PublisherManager:
+def get_publisher_manager() -> PublisherManager:
     return PublisherManager()
 
 
 @lru_cache
-def get_subscribers_manager() -> SubscriberManager:
-    return SubscriberManager(publisher_manager=get_publishers_manager())
+def get_subscriber_manager() -> SubscriberManager:
+    return SubscriberManager(publisher_manager=get_publisher_manager())

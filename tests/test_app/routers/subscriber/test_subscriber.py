@@ -4,8 +4,8 @@ from unittest.mock import patch
 import pytest
 from fastapi import HTTPException
 
-from app.routers.subscriber.subscriber import register, unregister
-from app.subscriber.models import SubscriberAlreadyExistsException, SubscriberDoesNotExistsException
+from app.routers.subscriber.subscriber import register, unregister, _to_subscriber
+from app.subscriber.models import SubscriberAlreadyExistsException, SubscriberDoesNotExistsException, Subscriber
 
 from test_app.conftest import subscriber_info_mock, subscriber_mock, subscriber_manager_mock, ID
 
@@ -105,3 +105,12 @@ def test_unregister_exception(exception_mock, manager_mock, subscriber_manager_m
     assert e.value.status_code == 500
     manager_mock.unregister.assert_called_with(ID)
     exception_mock.assert_called_once()
+
+@patch.object(Subscriber, 'model_validate')
+def test__to_subscriber(model_validate_mock, subscriber_mock, subscriber_info_mock):
+    model_validate_mock.return_value = subscriber_mock
+
+    subscriber = _to_subscriber(subscriber_info_mock)
+
+    assert subscriber == subscriber_mock
+    model_validate_mock.assert_called_with(subscriber_info_mock.model_dump())
