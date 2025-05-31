@@ -16,7 +16,8 @@ def test_logger_decorator(exception_mock, info_mock):
     function_to_decorate()
 
     info_mock.assert_has_calls(
-        [call("Starting function function_to_decorate"), call("Finishing function function_to_decorate")])
+        [call("Starting function function_to_decorate. Args: (). Kwargs: {}"),
+         call("Finishing function function_to_decorate. Args: (). Kwargs: {}")])
     exception_mock.assert_not_called()
 
 
@@ -31,5 +32,6 @@ def test_logger_decorator_exception(exception_mock, info_mock):
         function_to_decorate()
 
     info_mock.assert_has_calls(
-        [call("Starting function function_to_decorate"), call("Finishing function function_to_decorate")])
-    exception_mock.assert_called_once_with("Exception executing function function_to_decorate: ")
+        [call("Starting function function_to_decorate. Args: (). Kwargs: {}"),
+         call("Finishing function function_to_decorate. Args: (). Kwargs: {}")])
+    exception_mock.assert_called_once_with("Exception executing function function_to_decorate. Args: (). Kwargs: {}: ")
